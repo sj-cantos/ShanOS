@@ -33,10 +33,10 @@ namespace ShanOS.Commands
             {
                 if(cmd.name == commandInput)
                 {
-                    cmd.execute(arguments.ToArray());
+                     return cmd.execute(arguments.ToArray());
                 }
             }
-            return "";
+            return $" Your command {commandInput} does not exists.";
         }
     }
 }
