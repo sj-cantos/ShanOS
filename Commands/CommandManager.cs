@@ -12,6 +12,7 @@ namespace ShanOS.Commands
 
         public CommandManager() {
             this.commands = new List<Command>(1);
+            this.commands.Add(new HelpCommand());
         }
 
         public String processCommand(String command)
