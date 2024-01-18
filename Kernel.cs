@@ -18,16 +18,16 @@ namespace ShanOS
             Console.WriteLine("-----------------ShanOS booted succesfully-------------");
             Console.WriteLine("=======================================================");
 
-            this.commandManager  = new CommandManager();
-            Sys.FileSystem.VFS.VFSManager.RegisterVFS(this.vfs);
+           
             this.vfs = new CosmosVFS();
+            Sys.FileSystem.VFS.VFSManager.RegisterVFS(this.vfs);
+            this.commandManager = new CommandManager();
+
         }
 
         protected override void Run()
         {
-            Console.Write("Input: ");
-            var input = Console.ReadLine();          
-           
+            Console.Write("Input: ");                
             Console.WriteLine(this.commandManager.processCommand(Console.ReadLine()));
         }
     }

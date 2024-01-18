@@ -15,6 +15,10 @@ namespace ShanOS.Commands
         public override string execute(string[] args)
         {
             string response = "";
+            if (args.Length < 2)
+            {
+                return "Insufficient arguments provided.";
+            }
             switch (args[0])
             {
                 
@@ -87,7 +91,7 @@ namespace ShanOS.Commands
                     break;*/
 
                 default:
-                    response = $"Unexpected argument {args[0]}";
+                    response = $"Unexpected argument";
                     break;
             }
 
