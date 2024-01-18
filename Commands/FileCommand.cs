@@ -43,6 +43,38 @@ namespace ShanOS.Commands
                     }
 
                     break;
+
+                case "mkdir":
+                    try
+                    {
+                        Sys.FileSystem.VFS.VFSManager.CreateDirectory(args[1]);
+                        response = $"Your dir {args[1]} was  created successfully.";
+                    }
+                    catch (Exception e)
+                    {
+                        response = $"Directory creation failed. Error: {e.ToString()}";
+                        break;
+                    }
+
+                    break;
+
+                case "rmdir":
+                    try
+                    {
+                        Sys.FileSystem.VFS.VFSManager.DeleteDirectory(args[1], true);
+                        response = $"Your dir {args[1]} was  deleted successfully.";
+                    }
+                    catch (Exception e)
+                    {
+                        response = $"Directory deletion failed. Error: {e.ToString()}";
+                        break;
+                    }
+
+                    break;
+
+                default:
+                    response = $"Unexpected argument {args[0]}";
+                    break;
             }
 
             return response;
