@@ -13,12 +13,13 @@ namespace ShanOS.Commands
         public CommandManager() {
             this.commands = new List<Command>(1);
             this.commands.Add(new HelpCommand());
+            this.commands.Add(new EchoCommand());
         }
 
         public String processCommand(String command)
         {
             String[] commandinputs = command.Split();
-            List<String> arguments = new List<String>();
+            List<String> arguments = commandinputs.Skip(1).ToList();
             String commandInput = commandinputs[0];
 
             int ctr = 0;
