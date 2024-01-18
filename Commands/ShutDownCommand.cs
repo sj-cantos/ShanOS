@@ -13,9 +13,15 @@ namespace ShanOS.Commands
 
         public override string execute(string[] args)
         {
-
-            Sys.Power.Shutdown();
-            return "Shutting down the system";
+            Console.WriteLine("Are you sure you want to shutdown");
+            string response = Console.ReadLine();
+            if (response == "y")
+            {
+                Sys.Power.Shutdown();
+                return "Shutting down the system";
+            }
+            else { return "Shutdown aborted"; }
+           
         }
     }
 }

@@ -14,6 +14,7 @@ namespace ShanOS.Commands
             this.commands = new List<Command>(1);
             this.commands.Add(new HelpCommand());
             this.commands.Add(new EchoCommand());
+            this.commands.Add(new ShutDownCommand());
         }
 
         public String processCommand(String command)
