@@ -13,7 +13,10 @@ namespace ShanOS.Commands
         public override string execute(string[] args)
         {
            
-            return "Displaying help information...";
+            return "Displaying help information.../n" +
+                "help - displays ommands /n" +
+                "efho - prints text /n"+
+                "shutdown - shuts the system down";
         }
     }
 }
