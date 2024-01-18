@@ -22,15 +22,7 @@ namespace ShanOS.Commands
             List<String> arguments = commandinputs.Skip(1).ToList();
             String commandInput = commandinputs[0];
 
-            int ctr = 0;
-            foreach (String s in commandinputs)
-            {
-                if(ctr == 0)
-                {
-                    arguments.Add(s);
-                    ++ctr;
-                }
-            }
+        
             foreach (Command cmd in this.commands)
             {
                 if(cmd.name == commandInput)
