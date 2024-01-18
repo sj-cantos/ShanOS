@@ -17,7 +17,7 @@ namespace ShanOS.Commands
             switch (args[0])
             {
                 
-                case "create":
+                case "mk":
                     try
                     {
                         Sys.FileSystem.VFS.VFSManager.CreateFile(args[1]);
@@ -30,7 +30,7 @@ namespace ShanOS.Commands
                     }
                     break;
 
-                case "delete":
+                case "rm":
                     try
                     {
                         Sys.FileSystem.VFS.VFSManager.DeleteFile(args[1]);
