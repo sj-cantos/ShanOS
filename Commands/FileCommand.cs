@@ -77,7 +77,7 @@ namespace ShanOS.Commands
 
                     break;
 
-                /*case "ls":
+                case "ls":
                     string[] dirDirectories = Directory.GetDirectories(Directory.GetCurrentDirectory());
                     foreach (var dir in dirDirectories)
                     {
@@ -88,7 +88,7 @@ namespace ShanOS.Commands
                     {
                         Console.WriteLine(file + " | File");
                     }
-                    break;*/
+                    break;
 
                 default:
                     response = $"Unexpected argument";
