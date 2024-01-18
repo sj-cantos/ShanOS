@@ -8,7 +8,7 @@ namespace ShanOS.Commands
 {
     internal class EchoCommand : Command
     {
-        public EchoCommand() : base("efho") { }
+        public EchoCommand(string name) : base(name) { }
 
         public override string execute(string[] args)
         {

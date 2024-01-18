@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -71,6 +72,19 @@ namespace ShanOS.Commands
                     }
 
                     break;
+
+                /*case "ls":
+                    string[] dirDirectories = Directory.GetDirectories(Directory.GetCurrentDirectory());
+                    foreach (var dir in dirDirectories)
+                    {
+                        Console.WriteLine(dir + " | Directory");
+                    }
+                    string[] dirFiles = Directory.GetFiles(Directory.GetCurrentDirectory());
+                    foreach (var file in dirFiles)
+                    {
+                        Console.WriteLine(file + " | File");
+                    }
+                    break;*/
 
                 default:
                     response = $"Unexpected argument {args[0]}";

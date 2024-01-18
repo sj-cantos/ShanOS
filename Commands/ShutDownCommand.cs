@@ -9,7 +9,7 @@ namespace ShanOS.Commands
 {
     internal class ShutDownCommand : Command
     {
-        public ShutDownCommand() : base("shutdown") { }
+        public ShutDownCommand(string name) : base(name) { }
 
         public override string execute(string[] args)
         {

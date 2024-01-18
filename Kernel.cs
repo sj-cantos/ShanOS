@@ -27,8 +27,8 @@ namespace ShanOS
         {
             Console.Write("Input: ");
             var input = Console.ReadLine();          
-            string result = this.commandManager.processCommand(input);
-            Console.WriteLine(result);
+           
+            Console.WriteLine(this.commandManager.processCommand(Console.ReadLine()));
         }
     }
 }

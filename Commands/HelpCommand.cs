@@ -8,7 +8,7 @@ namespace ShanOS.Commands
 {
     internal class HelpCommand : Command
     {
-        public HelpCommand() : base("help") { }
+        public HelpCommand(string name) : base(name) { }
 
         public override string execute(string[] args)
         {
