@@ -10,7 +10,9 @@ namespace ShanOS
 
         protected override void BeforeRun()
         {
-            Console.WriteLine("ShanOS booted successfully. Type a line of text to get it echoed back.");
+            Console.WriteLine("=======================================================");
+            Console.WriteLine("-----------------ShanOS booted succesfully-------------");
+            Console.WriteLine("=======================================================");
         }
 
         protected override void Run()
