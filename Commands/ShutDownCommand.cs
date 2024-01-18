@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Sys = Cosmos.System;
+
+namespace ShanOS.Commands
+{
+    internal class ShutDownCommand : Command
+    {
+        public ShutDownCommand() : base("shutdown") { }
+
+        public override string execute(string[] args)
+        {
+
+            Sys.Power.Shutdown();
+            return "Shutting down the system";
+        }
+    }
+}
