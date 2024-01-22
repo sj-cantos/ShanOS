@@ -15,7 +15,9 @@ namespace ShanOS.Commands
     {
         private MemoryManager memoryManager;
         private ProcessManager processManager;
-        public FileCommand(string name) : base(name) { }
+        public FileCommand(string name, ProcessManager processManager) : base(name) {
+            this.processManager = processManager;
+        }
 
         public override string execute(string[] args)
         {
@@ -74,7 +76,7 @@ namespace ShanOS.Commands
                         uint fileSize = 1024;
                         IntPtr fileData = MemoryManager.AllocateMemory(fileSize);
                         Sys.FileSystem.VFS.VFSManager.CreateDirectory(root + args[1]);
-                        processManager.CreateProcess("create dir", "finished", fileSize.ToString());
+                        //processManager.CreateProcess("create dir", "finished", fileSize.ToString());
                         response = $"Your directory {args[1]} was  created successfully.";
                         MemoryManager.FreeMemory(fileData);
                     }

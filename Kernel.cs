@@ -5,6 +5,7 @@ using System.Text;
 using Sys = Cosmos.System;
 using Cosmos.System.FileSystem;
 using ShanOS.CosmosMemoryManagement;
+using ShanOS.ProcessManagement;
 
 namespace ShanOS
 {
@@ -13,6 +14,7 @@ namespace ShanOS
         private CommandManager commandManager;
         private MemoryManager memoryManager;
         private UserManager userManager;
+        private ProcessManager processManager;
         private CosmosVFS vfs;
         protected override void BeforeRun()
         {
@@ -26,11 +28,12 @@ namespace ShanOS
 
             
             this.memoryManager = new MemoryManager();
+            this.processManager = new ProcessManager();
             MemoryManager.InitializeMemory();
-            this.commandManager = new CommandManager(memoryManager);
-            this.userManager = new UserManager(); // Assume you have a UserManager class
+            this.commandManager = new CommandManager(memoryManager,processManager);
+            this.userManager = new UserManager(); 
 
-            // Create some example users
+           
             this.userManager.AddUser("admin", "adminpass");
             this.userManager.AddUser("user1", "userpass");
            

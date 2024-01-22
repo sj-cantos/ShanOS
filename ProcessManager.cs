@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using ShanOS.Commands;
 using ShanOS.CosmosMemoryManagement;
 
@@ -11,10 +12,10 @@ namespace ShanOS.ProcessManagement
         private MemoryManager memoryManager;
         private int lastProcessId; 
 
-        public ProcessManager(MemoryManager memoryManager)
+        public ProcessManager()
         {
             this.processes = new List<Process>();
-            this.memoryManager = memoryManager;
+          
             this.lastProcessId = 0; 
         }
 
@@ -31,10 +32,19 @@ namespace ShanOS.ProcessManagement
         }
 
 
-        public List<Process> GetProcesses()
+        public string GetProcesses()
         {
-            return processes;
+            StringBuilder listBuilder = new StringBuilder();
+            listBuilder.AppendLine("Id\t Name\t Status\t Memory Allocated");
+
+            foreach (var item in processes)
+            {
+                listBuilder.AppendLine($"{item.Id}\t {item.Name}\t {item.Status}\t {item.Memory}");
+            }
+
+            return listBuilder.ToString();
         }
+
     }
 
     public class Process
