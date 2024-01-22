@@ -105,6 +105,19 @@ namespace ShanOS.Commands
                     response = $"Current directory: {Directory.GetCurrentDirectory()}";
                     break;
 
+                case "cat":
+                    try
+                    {
+                        string content = File.ReadAllText(args[1]);
+                        response = $"Contents of {args[1]}:\n{content}";
+                    }
+                    catch (Exception e)
+                    {
+                        response = $"Failed to read file. Error: {e.ToString()}";
+                    }
+                    break;
+
+
                 default:
                     response = $"Unexpected argument";
                     break;
