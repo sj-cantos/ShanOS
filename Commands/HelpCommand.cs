@@ -13,10 +13,15 @@ namespace ShanOS.Commands
         public override string execute(string[] args)
         {
            
-            return "Displaying help information.../n" +
-                "help - displays ommands /n" +
-                "efho - prints text /n"+
-                "shutdown - shuts the system down";
+            return "Displaying help information...\n" +
+                "help - displays ommands \n" +
+                "echo [args] - prints text \n" +
+                "shutdown - shuts the system down \n" +
+                "file mk [args] - creates a file \n"
+                + "file rm [args] - deletes a file\n" +
+                "file mkdir [args] - creates a new directory\n"
+                + "file rmdir [args] - deletes a directory\n" +
+                "ls - lists all of the directories\n";
         }
     }
 }
