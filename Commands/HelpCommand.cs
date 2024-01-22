@@ -14,14 +14,17 @@ namespace ShanOS.Commands
         {
            
             return "Displaying help information...\n" +
-                "help - displays ommands \n" +
-                "echo [args] - prints text \n" +
-                "shutdown - shuts the system down \n" +
-                "file mk [args] - creates a file \n"
-                + "file rm [args] - deletes a file\n" +
-                "file mkdir [args] - creates a new directory\n"
-                + "file rmdir [args] - deletes a directory\n" +
-                "ls - lists all of the directories\n";
+                "------GENERAL COMMANDS-------\n" +
+                "help\t - displays ommands \n" +
+                "echo [text]\t - prints text \n" +
+                "shutdown\t - shuts the system down \n" +
+                "------FILE SYSTEM COMMANDS------\n" +
+                "file mk [filename.txt]\t - creates a file \n"
+                + "file rm [filename.txt]\t - deletes a file\n" +
+                "file mkdir [dir name]\t - creates a new directory\n"
+                + "file rmdir [dir name]\t - deletes a directory\n" +
+                "file write [filename.txt] [content]\t - writes content to a file\n" +
+                "file cat [filename.txt]\t - reads the content of a file\n";
         }
     }
 }
