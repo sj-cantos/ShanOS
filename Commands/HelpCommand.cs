@@ -26,7 +26,9 @@ namespace ShanOS.Commands
                 "file write [filename.txt] [content]\t - writes content to a file\n" +
                 "file cat [filename.txt]\t - reads the content of a file\n" +
                 "-------MEMORY COMMANDS---------\n" +
-                "memory info - displays the ram\n";
+                "memory free - displays the available ram\n" +
+                "memory used - displays the used memory\n" + 
+                "memory allocated - displays the number of allocated objects\n";
         }
     }
 }
