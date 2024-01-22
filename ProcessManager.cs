@@ -28,7 +28,7 @@ namespace ShanOS.ProcessManagement
             Process newProcess = new Process { Id = newProcessId, Name = name, Status = status, Memory = memory };
             processes.Add(newProcess);
 
-            Console.WriteLine($"Process '{name}' started with ID: {newProcessId}");
+            
         }
 
 

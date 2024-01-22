@@ -18,7 +18,7 @@ namespace ShanOS.Commands
             this.commands.Add(new ShutDownCommand("shutdown"));
             this.commands.Add(new FileCommand("file", processManager));
             this.commands.Add(new MemoryCommand("memory", memoryManager));
-            this.commands.Add(new ProcessCommand("processes", processManager));
+            this.commands.Add(new ProcessCommand("ps", processManager));
         }
 
         public String processCommand(String command)
