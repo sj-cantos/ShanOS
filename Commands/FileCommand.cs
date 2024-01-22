@@ -101,6 +101,9 @@ namespace ShanOS.Commands
                         response = $"Failed to change directory. Error: {e.ToString()}";
                     }
                     break;
+                case "pwd":
+                    response = $"Current directory: {Directory.GetCurrentDirectory()}";
+                    break;
 
                 default:
                     response = $"Unexpected argument";
