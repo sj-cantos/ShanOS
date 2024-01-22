@@ -24,7 +24,9 @@ namespace ShanOS.Commands
                 "file mkdir [dir name]\t - creates a new directory\n"
                 + "file rmdir [dir name]\t - deletes a directory\n" +
                 "file write [filename.txt] [content]\t - writes content to a file\n" +
-                "file cat [filename.txt]\t - reads the content of a file\n";
+                "file cat [filename.txt]\t - reads the content of a file\n" +
+                "-------MEMORY COMMANDS---------\n" +
+                "memory info - displays the ram\n";
         }
     }
 }

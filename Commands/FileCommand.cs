@@ -116,10 +116,7 @@ namespace ShanOS.Commands
                     }
 
                     break;
-                case "pwd":
-                    response = $"Current directory: {Directory.GetCurrentDirectory()}";
-                    break;
-
+                
                 case "write":
                     try
                     {
@@ -154,15 +151,24 @@ namespace ShanOS.Commands
                 case "cat":
                     try
                     {
-                        string content = File.ReadAllText(root + args[1]);
-                        response = $"Contents of {args[1]}:\n{content}";
+                        string filePath = Path.Combine(root + currentDirectory, args[1]);
+
+                        if (File.Exists(filePath))
+                        {
+                            string content = File.ReadAllText(filePath);
+                            response = $"Contents of {args[1]}:\n{content}";
+                        }
+                        else
+                        {
+                            response = $"File '{args[1]}' does not exist.";
+                        }
                     }
                     catch (Exception e)
                     {
-                        response = $"Failed to read file. Error: {e.ToString()}";
-                        break;
+                        response = $"Failed to read file. Error: {e.Message}";
                     }
                     break;
+
 
 
                 default:

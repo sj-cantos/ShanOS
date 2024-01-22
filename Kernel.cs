@@ -36,7 +36,9 @@ namespace ShanOS
 
         protected override void Run()
         {
-            if (!userManager.IsUserLoggedIn())
+           
+
+            do
             {
                 Console.Write("Enter username: ");
                 string username = Console.ReadLine();
@@ -48,21 +50,24 @@ namespace ShanOS
 
                 if (user.Username != null && user.Password == password)
                 {
-                    userManager.Login(user.Username,password);
-                    
+                    userManager.Login(user.Username, password);
+                    break;
                 }
                 else
                 {
                     Console.WriteLine("Login failed. Invalid username or password.");
+
+                    
                 }
-            }
-            else
+            } while (!userManager.IsUserLoggedIn());
+
+            if (userManager.IsUserLoggedIn())
             {
-                // User is logged in, process commands
                 Console.Write($"{userManager.GetCurrentUsername()}@ShanOS:~> ");
                 string input = Console.ReadLine();
                 Console.WriteLine(commandManager.processCommand(input));
             }
         }
+
     }
 }

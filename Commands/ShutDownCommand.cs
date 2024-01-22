@@ -13,7 +13,7 @@ namespace ShanOS.Commands
 
         public override string execute(string[] args)
         {
-            Console.WriteLine("Are you sure you want to shutdown");
+            Console.Write("Are you sure you want to shutdown: ");
             string response = Console.ReadLine();
             if (response == "y")
             {
