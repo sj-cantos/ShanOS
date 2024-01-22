@@ -90,6 +90,18 @@ namespace ShanOS.Commands
                     }
                     break;
 
+                case "cd":
+                    try
+                    {
+                        Directory.SetCurrentDirectory(args[1]);
+                        response = $"Changed directory to {args[1]}.";
+                    }
+                    catch (Exception e)
+                    {
+                        response = $"Failed to change directory. Error: {e.ToString()}";
+                    }
+                    break;
+
                 default:
                     response = $"Unexpected argument";
                     break;
