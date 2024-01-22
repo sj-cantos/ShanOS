@@ -7,11 +7,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Sys = Cosmos.System;
 using ShanOS.CosmosMemoryManagement;
+using ShanOS.ProcessManagement;
+using Cosmos.HAL.BlockDevice.Registers;
 namespace ShanOS.Commands
 {
     internal class FileCommand : Command
     {
         private MemoryManager memoryManager;
+        private ProcessManager processManager;
         public FileCommand(string name) : base(name) { }
 
         public override string execute(string[] args)
@@ -31,6 +34,8 @@ namespace ShanOS.Commands
                         uint fileSize = 1024; // Set your desired file size
                         IntPtr fileData = MemoryManager.AllocateMemory(fileSize);
                         string filePath = Path.Combine(root + currentDirectory, args[1]);
+
+                        processManager.CreateProcess("create file", "finished", fileSize.ToString());
                         Sys.FileSystem.VFS.VFSManager.CreateFile(filePath);
                         response = $"Your file {args[1]} was created successfully at {filePath}.";
                         MemoryManager.FreeMemory(fileData);
@@ -38,6 +43,7 @@ namespace ShanOS.Commands
                     }
                     catch (Exception e)
                     {
+
                         response = $"File creation failed. Error: {e.ToString()}";
                         break;
                     }
@@ -46,9 +52,13 @@ namespace ShanOS.Commands
                 case "rm":
                     try
                     {
+                        uint fileSize = 1024; // Set your desired file size
+                        IntPtr fileData = MemoryManager.AllocateMemory(fileSize);
+                        processManager.CreateProcess("create file", "finished", fileSize.ToString());
                         string filePath = Path.Combine(root + currentDirectory, args[1]);
                         Sys.FileSystem.VFS.VFSManager.DeleteFile(filePath);
                         response = $"Your file {args[1]} was deleted successfully at {filePath}.";
+                        MemoryManager.FreeMemory(fileData);
                     }
                     catch (Exception e)
                     {
@@ -64,6 +74,7 @@ namespace ShanOS.Commands
                         uint fileSize = 1024;
                         IntPtr fileData = MemoryManager.AllocateMemory(fileSize);
                         Sys.FileSystem.VFS.VFSManager.CreateDirectory(root + args[1]);
+                        processManager.CreateProcess("create dir", "finished", fileSize.ToString());
                         response = $"Your directory {args[1]} was  created successfully.";
                         MemoryManager.FreeMemory(fileData);
                     }
@@ -78,8 +89,12 @@ namespace ShanOS.Commands
                 case "rmdir":
                     try
                     {
+                        uint fileSize = 1024;
+                        IntPtr intPtr = MemoryManager.AllocateMemory(fileSize);
                         Sys.FileSystem.VFS.VFSManager.DeleteDirectory(root + args[1], true);
                         response = $"Your directory {args[1]} was  deleted successfully.";
+                        processManager.CreateProcess("remove dir", "finished", fileSize.ToString());
+                        MemoryManager.FreeMemory(intPtr);
                     }
                     catch (Exception e)
                     {
@@ -89,25 +104,7 @@ namespace ShanOS.Commands
 
                     break;
 
-                case "ls":
-                    try
-                    {
-                        string[] dirDirectories = Directory.GetDirectories(Directory.GetCurrentDirectory());
-                        foreach (var dir in dirDirectories)
-                        {
-                            Console.WriteLine(dir + " | Directory");
-                        }
-                        string[] dirFiles = Directory.GetFiles(Directory.GetCurrentDirectory());
-                        foreach (var file in dirFiles)
-                        {
-                            Console.WriteLine(file + " | File");
-                        }
-                    } catch(Exception e)
-                    {
-                        response = $"Error occured: {e.Message}";
-                        break;
-                    }
-                    break;
+                
 
                 case "cd":
                     try
@@ -127,6 +124,8 @@ namespace ShanOS.Commands
                 case "write":
                     try
                     {
+                        uint fileSize = 1024;
+                        IntPtr fileData = MemoryManager.AllocateMemory(fileSize);
                         string filePath = Path.Combine(root + currentDirectory, args[1]);
 
                       
@@ -145,6 +144,8 @@ namespace ShanOS.Commands
 
                         File.WriteAllText(filePath, content);
                         response = $"Successfully wrote content to file '{args[1]}'.";
+                        processManager.CreateProcess("write file", "finished", fileSize.ToString());
+                        MemoryManager.FreeMemory(fileData);
                     }
                     catch (Exception e)
                     {
@@ -159,7 +160,8 @@ namespace ShanOS.Commands
                     try
                     {
                         string filePath = Path.Combine(root + currentDirectory, args[1]);
-
+                        uint fileSize = 1024;
+                        IntPtr fileData = MemoryManager.AllocateMemory(fileSize);
                         if (File.Exists(filePath))
                         {
                             string content = File.ReadAllText(filePath);
@@ -169,6 +171,8 @@ namespace ShanOS.Commands
                         {
                             response = $"File '{args[1]}' does not exist.";
                         }
+                        processManager.CreateProcess("read file", "finished", fileSize.ToString());
+                        MemoryManager.FreeMemory(fileData);
                     }
                     catch (Exception e)
                     {
