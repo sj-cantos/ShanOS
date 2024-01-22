@@ -26,7 +26,6 @@ namespace ShanOS.Commands
                     try
                     {
 
-                        Console.WriteLine(currentDirectory);
                         string filePath = Path.Combine(root + currentDirectory, args[1]);
                         Sys.FileSystem.VFS.VFSManager.CreateFile(filePath);
                         response = $"Your file {args[1]} was created successfully at {filePath}.";

@@ -4,6 +4,7 @@ using Cosmos.Core;
 using Cosmos.HAL;
 using ShanOS.Commands;
 using ShanOS.CosmosMemoryManagement;
+
     internal class MemoryCommand : Command
     {
         private MemoryManager memoryManager;
@@ -34,11 +35,19 @@ using ShanOS.CosmosMemoryManagement;
                         response = GetFreeMemory();
                         break;
 
-                    case "used":
-                        response = GetUsedMemory();
-                        break;
+                case "used":
+                    try
+                    {
+                        ulong usedMemory = ShanOS.CosmosMemoryManagement.MemoryManager.GetUsedMemory();
+                        response = $"Used Memory: {usedMemory} bytes";
+                    }
+                    catch (Exception ex)
+                    {
+                        response = $"Error: {ex.ToString()}";
+                    }
+                    break;
 
-                    case "clear":
+                case "clear":
                         response = ClearConsole();
                         break;
 

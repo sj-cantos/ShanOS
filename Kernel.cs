@@ -31,14 +31,14 @@ namespace ShanOS
             // Create some example users
             this.userManager.AddUser("admin", "adminpass");
             this.userManager.AddUser("user1", "userpass");
-      
+           
         }
 
         protected override void Run()
         {
-           
 
-            do
+
+            while (!userManager.IsUserLoggedIn()) 
             {
                 Console.Write("Enter username: ");
                 string username = Console.ReadLine();
@@ -48,9 +48,10 @@ namespace ShanOS
 
                 User user = userManager.GetUser(username);
 
-                if (user.Username != null && user.Password == password)
+                if (user != null && user.Password == password)
                 {
                     userManager.Login(user.Username, password);
+                   
                     break;
                 }
                 else
@@ -59,7 +60,7 @@ namespace ShanOS
 
                     
                 }
-            } while (!userManager.IsUserLoggedIn());
+            } 
 
             if (userManager.IsUserLoggedIn())
             {
