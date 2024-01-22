@@ -44,7 +44,7 @@ namespace ShanOS.Commands
                     {
                         string filePath = Path.Combine(root + currentDirectory, args[1]);
                         Sys.FileSystem.VFS.VFSManager.DeleteFile(filePath);
-                        response = $"Your file {args[1]} was deleted successfully at {currentDirectory}.";
+                        response = $"Your file {args[1]} was deleted successfully at {filePath}.";
                     }
                     catch (Exception e)
                     {
@@ -58,7 +58,7 @@ namespace ShanOS.Commands
                     try
                     {
                         Sys.FileSystem.VFS.VFSManager.CreateDirectory(root + args[1]);
-                        response = $"Your dir {args[1]} was  created successfully.";
+                        response = $"Your directory {args[1]} was  created successfully.";
                     }
                     catch (Exception e)
                     {
@@ -72,7 +72,7 @@ namespace ShanOS.Commands
                     try
                     {
                         Sys.FileSystem.VFS.VFSManager.DeleteDirectory(root + args[1], true);
-                        response = $"Your dir {args[1]} was  deleted successfully.";
+                        response = $"Your directory {args[1]} was  deleted successfully.";
                     }
                     catch (Exception e)
                     {
@@ -119,6 +119,37 @@ namespace ShanOS.Commands
                 case "pwd":
                     response = $"Current directory: {Directory.GetCurrentDirectory()}";
                     break;
+
+                case "write":
+                    try
+                    {
+                        string filePath = Path.Combine(root + currentDirectory, args[1]);
+
+                      
+                        if (!File.Exists(filePath))
+                        {
+                            Console.WriteLine($"File '{args[1]}' does not exist. Use 'mk {args[1]}' to create it first.");
+                            break;
+                        }
+
+                       
+                        string content = "";
+                        for (int i = 2; i < args.Length; i++)
+                        {
+                            content += args[i] + " ";
+                        }
+
+                        File.WriteAllText(filePath, content);
+                        response = $"Successfully wrote content to file '{args[1]}'.";
+                    }
+                    catch (Exception e)
+                    {
+                        response = $"Error writing to file: {e.Message}";
+                        break;
+                    }
+                    break;
+
+
 
                 case "cat":
                     try
