@@ -43,7 +43,7 @@ namespace ShanOS.Commands
                     try
                     {
                         string filePath = Path.Combine(root + currentDirectory, args[1]);
-                        Sys.FileSystem.VFS.VFSManager.DeleteFile(args[1]);
+                        Sys.FileSystem.VFS.VFSManager.DeleteFile(filePath);
                         response = $"Your file {args[1]} was deleted successfully at {currentDirectory}.";
                     }
                     catch (Exception e)
