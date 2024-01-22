@@ -32,7 +32,7 @@ using ShanOS.CosmosMemoryManagement;
                         break;
 
                     case "free":
-                        response = MemoryManager.GetAvailableRAM().ToString();
+                        response = $"Free memory: {MemoryManager.GetAvailableRAM().ToString()}";
                         break;
 
                 case "used":
@@ -47,13 +47,10 @@ using ShanOS.CosmosMemoryManagement;
                     }
                     break;
 
-                case "clear":
-                        response = ClearConsole();
+                case "allocated":
+                    response = $"Allocated objects: {MemoryManager.GetAllocatedObjectCount().ToString()}";
                         break;
 
-                    case "allocate":
-                        response = AllocateMemory(args);
-                        break;
 
                     default:
                         response = $"Unknown memory command";
