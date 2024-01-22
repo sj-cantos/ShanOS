@@ -13,11 +13,11 @@ namespace ShanOS.Commands
         public override string execute(string[] args)
         {
            
-            return "Displaying help information...\n" +
+            return "------DISPLAYING HELP INFORMATION-------\n\n" +
                 "------GENERAL COMMANDS-------\n" +
                 "help\t - displays ommands \n" +
                 "echo [text]\t - prints text \n" +
-                "shutdown\t - shuts the system down \n" +
+                "shutdown\t - shuts the system down \n\n" +
                 "------FILE SYSTEM COMMANDS------\n" +
                 "file mk [filename.txt]\t - creates a file \n"
                 + "file rm [filename.txt]\t - deletes a file\n" +

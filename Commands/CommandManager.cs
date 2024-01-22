@@ -13,9 +13,11 @@ namespace ShanOS.Commands
         public CommandManager() {
             this.commands = new List<Command>(1);
             this.commands.Add(new HelpCommand("help"));
-            this.commands.Add(new EchoCommand("efho"));
+            this.commands.Add(new EchoCommand("echo"));
             this.commands.Add(new ShutDownCommand("shutdown"));
             this.commands.Add(new FileCommand("file"));
+            this.commands.Add(new MemoryCommand("memory"));
+
         }
 
         public String processCommand(String command)
