@@ -19,13 +19,16 @@ namespace ShanOS.Commands
             {
                 return "Insufficient arguments provided.";
             }
+            string currentDirectory = Sys.FileSystem.VFS.VFSManager.GetDirectory(Sys.FileSystem.VFS.VFSManager.CurrentDirectory).ToString();
+
             switch (args[0])
             {
                 
                 case "mk":
                     try
                     {
-                        Sys.FileSystem.VFS.VFSManager.CreateFile(args[1]);
+
+                        Sys.FileSystem.VFS.VFSManager.CreateFile(Path.Combine(currentDirectory, args[1]));
                         response = $"Your file {args[1]} was created successfully.";
                     }
                     catch (Exception e)
