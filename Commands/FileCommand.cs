@@ -61,8 +61,11 @@ namespace ShanOS.Commands
                 case "mkdir":
                     try
                     {
+                        uint fileSize = 1024;
+                        IntPtr fileData = MemoryManager.AllocateMemory(fileSize);
                         Sys.FileSystem.VFS.VFSManager.CreateDirectory(root + args[1]);
                         response = $"Your directory {args[1]} was  created successfully.";
+                        MemoryManager.FreeMemory(fileData);
                     }
                     catch (Exception e)
                     {
