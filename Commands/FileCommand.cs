@@ -15,11 +15,9 @@ namespace ShanOS.Commands
         public override string execute(string[] args)
         {
             string response = "";
-            if (args.Length < 2)
-            {
-                return "Insufficient arguments provided.";
-            }
-            string currentDirectory = Directory.GetCurrentDirectory().ToString();
+
+            string currentDirectory = Directory.GetCurrentDirectory();
+            string root = "0:\\";
 
             switch (args[0])
             {
@@ -28,8 +26,11 @@ namespace ShanOS.Commands
                     try
                     {
 
-                        Sys.FileSystem.VFS.VFSManager.CreateFile(Path.Combine(currentDirectory, args[1]));
-                        response = $"Your file {args[1]} was created successfully.";
+                        Console.WriteLine(currentDirectory);
+                        string filePath = Path.Combine(root + currentDirectory, args[1]);
+                        Sys.FileSystem.VFS.VFSManager.CreateFile(filePath);
+                        response = $"Your file {args[1]} was created successfully at {filePath}.";
+                       
                     }
                     catch (Exception e)
                     {
@@ -41,8 +42,9 @@ namespace ShanOS.Commands
                 case "rm":
                     try
                     {
+                        string filePath = Path.Combine(root + currentDirectory, args[1]);
                         Sys.FileSystem.VFS.VFSManager.DeleteFile(args[1]);
-                        response = $"Your file {args[1]} was deleted successfully.";
+                        response = $"Your file {args[1]} was deleted successfully at {currentDirectory}.";
                     }
                     catch (Exception e)
                     {
@@ -55,7 +57,7 @@ namespace ShanOS.Commands
                 case "mkdir":
                     try
                     {
-                        Sys.FileSystem.VFS.VFSManager.CreateDirectory(args[1]);
+                        Sys.FileSystem.VFS.VFSManager.CreateDirectory(root + args[1]);
                         response = $"Your dir {args[1]} was  created successfully.";
                     }
                     catch (Exception e)
@@ -69,7 +71,7 @@ namespace ShanOS.Commands
                 case "rmdir":
                     try
                     {
-                        Sys.FileSystem.VFS.VFSManager.DeleteDirectory(args[1], true);
+                        Sys.FileSystem.VFS.VFSManager.DeleteDirectory(root + args[1], true);
                         response = $"Your dir {args[1]} was  deleted successfully.";
                     }
                     catch (Exception e)
@@ -81,15 +83,22 @@ namespace ShanOS.Commands
                     break;
 
                 case "ls":
-                    string[] dirDirectories = Directory.GetDirectories(Directory.GetCurrentDirectory());
-                    foreach (var dir in dirDirectories)
+                    try
                     {
-                        Console.WriteLine(dir + " | Directory");
-                    }
-                    string[] dirFiles = Directory.GetFiles(Directory.GetCurrentDirectory());
-                    foreach (var file in dirFiles)
+                        string[] dirDirectories = Directory.GetDirectories(Directory.GetCurrentDirectory());
+                        foreach (var dir in dirDirectories)
+                        {
+                            Console.WriteLine(dir + " | Directory");
+                        }
+                        string[] dirFiles = Directory.GetFiles(Directory.GetCurrentDirectory());
+                        foreach (var file in dirFiles)
+                        {
+                            Console.WriteLine(file + " | File");
+                        }
+                    } catch(Exception e)
                     {
-                        Console.WriteLine(file + " | File");
+                        response = $"Error occured: {e.Message}";
+                        break;
                     }
                     break;
 
@@ -97,12 +106,15 @@ namespace ShanOS.Commands
                     try
                     {
                         Directory.SetCurrentDirectory(args[1]);
+                        currentDirectory = args[1];
                         response = $"Changed directory to {args[1]}.";
                     }
                     catch (Exception e)
                     {
                         response = $"Failed to change directory. Error: {e.ToString()}";
+                        break;
                     }
+
                     break;
                 case "pwd":
                     response = $"Current directory: {Directory.GetCurrentDirectory()}";
@@ -111,12 +123,13 @@ namespace ShanOS.Commands
                 case "cat":
                     try
                     {
-                        string content = File.ReadAllText(args[1]);
+                        string content = File.ReadAllText(root + args[1]);
                         response = $"Contents of {args[1]}:\n{content}";
                     }
                     catch (Exception e)
                     {
                         response = $"Failed to read file. Error: {e.ToString()}";
+                        break;
                     }
                     break;
 
