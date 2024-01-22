@@ -19,7 +19,7 @@ namespace ShanOS.Commands
             {
                 return "Insufficient arguments provided.";
             }
-            string currentDirectory = Sys.FileSystem.VFS.VFSManager.GetDirectory(Sys.FileSystem.VFS.VFSManager.CurrentDirectory).ToString();
+            string currentDirectory = Directory.GetCurrentDirectory().ToString();
 
             switch (args[0])
             {
