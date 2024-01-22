@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using ShanOS.CosmosMemoryManagement;
 namespace ShanOS.Commands
 {
     internal class CommandManager
     {
         private List<Command> commands;
 
-        public CommandManager() {
+        public CommandManager(MemoryManager memoryManager) {
             this.commands = new List<Command>(1);
             this.commands.Add(new HelpCommand("help"));
             this.commands.Add(new EchoCommand("echo"));
             this.commands.Add(new ShutDownCommand("shutdown"));
             this.commands.Add(new FileCommand("file"));
-            this.commands.Add(new MemoryCommand("memory"));
+            this.commands.Add(new MemoryCommand("memory", memoryManager));
 
         }
 

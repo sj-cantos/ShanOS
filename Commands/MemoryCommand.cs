@@ -2,14 +2,16 @@
 using System.Linq;
 using Cosmos.Core;
 using Cosmos.HAL;
-
-namespace ShanOS.Commands
-{
+using ShanOS.Commands;
+using ShanOS.CosmosMemoryManagement;
     internal class MemoryCommand : Command
     {
-        private MemoryManager memoryManager = new MemoryManager();
+        private MemoryManager memoryManager;
 
-        public MemoryCommand(string name) : base(name) { }
+        public MemoryCommand(string name, MemoryManager memoryManager) : base(name)
+        {
+            this.memoryManager = memoryManager;
+        }
 
         public override string execute(string[] args)
         {
@@ -40,6 +42,10 @@ namespace ShanOS.Commands
                         response = ClearConsole();
                         break;
 
+                    case "allocate":
+                        response = AllocateMemory(args);
+                        break;
+
                     default:
                         response = $"Unknown memory command";
                         break;
@@ -60,28 +66,56 @@ namespace ShanOS.Commands
             return memoryInfo;
         }
 
-        private string GetFreeMemory()
-        {
-            // In a real system, you would need more sophisticated memory management to accurately determine free memory.
-            // For simplicity, let's assume that free memory is the difference between total memory and used memory.
-            ulong totalMemory = CPU.GetAmountOfRAM();
-            ulong usedMemory = memoryManager.GetUsedMemory();
-            ulong freeMemory = totalMemory - usedMemory;
-            string freeMemoryInfo = $"Free Memory: {freeMemory} bytes";
-            return freeMemoryInfo;
-        }
+    private string GetFreeMemory()
+    {
+        // In a real system, you would need more sophisticated memory management to accurately determine free memory.
+        // For simplicity, let's assume that free memory is the difference between total memory and used memory.
+        ulong totalMemory = CPU.GetAmountOfRAM();
+        ulong usedMemory = MemoryManager.GetUsedMemory(); // Use the type name here
+        ulong freeMemory = totalMemory - usedMemory;
+        string freeMemoryInfo = $"Free Memory: {freeMemory} bytes";
+        return freeMemoryInfo;
+    }
 
-        private string GetUsedMemory()
-        {
-            ulong usedMemory = memoryManager.GetUsedMemory();
-            string usedMemoryInfo = $"Used Memory: {usedMemory} bytes";
-            return usedMemoryInfo;
-        }
+    private string GetUsedMemory()
+    {
+        ulong usedMemory = MemoryManager.GetUsedMemory(); // Use the type name here
+        string usedMemoryInfo = $"Used Memory: {usedMemory} bytes";
+        return usedMemoryInfo;
+    }
 
-        private string ClearConsole()
+    private string ClearConsole()
         {
             Console.Clear();
             return "Console cleared.";
         }
+
+    private string AllocateMemory(string[] args)
+    {
+        if (args.Length < 2)
+        {
+            return "Insufficient arguments for allocate command.";
+        }
+
+        if (ulong.TryParse(args[1], out ulong size))
+        {
+            // Cast size to uint when calling AllocateMemory
+            IntPtr allocatedMemory = MemoryManager.AllocateMemory((uint)size);
+
+            if (allocatedMemory != IntPtr.Zero)
+            {
+                return $"Allocated {size} bytes at address: {allocatedMemory.ToInt64()}";
+            }
+            else
+            {
+                return "Memory allocation failed.";
+            }
+        }
+        else
+        {
+            return "Invalid size argument for allocate command.";
+        }
     }
+
 }
+

@@ -1,48 +1,86 @@
 ﻿using System;
-using System.Collections.Generic;
-using Cosmos.System;
 
-namespace ShanOS.Commands
+namespace ShanOS.CosmosMemoryManagement
 {
-    internal class MemoryManager
+    public class MemoryManager
     {
-        private List<MemoryBlock> allocatedMemoryBlocks = new List<MemoryBlock>();
+        private const uint PageSize = 4096; // Size of a page in bytes
+        private const uint MemorySize = 1024 * 1024 * 32; // Total memory size in bytes (32 MB in this example)
+        private static byte[] MemoryPool; // The entire memory pool
+        private static bool[] MemoryMap; // Memory allocation map
 
-        public void AllocateMemory(ulong size)
+        public static void InitializeMemory()
         {
-            allocatedMemoryBlocks.Add(new MemoryBlock(size));
-        }
+            MemoryPool = new byte[MemorySize];
+            MemoryMap = new bool[MemorySize / PageSize];
 
-        public void DeallocateMemory(ulong size)
-        {
-            // In a real system, you would need to implement logic to find and deallocate the specific memory block.
-            // For simplicity, let's remove the first allocated block regardless of size.
-            var blockToRemove = allocatedMemoryBlocks.Find(b => b.Size == size);
-            if (blockToRemove != null)
+            // Mark all pages as unallocated initially
+            for (int i = 0; i < MemoryMap.Length; i++)
             {
-                allocatedMemoryBlocks.Remove(blockToRemove);
+                MemoryMap[i] = false;
             }
         }
 
-        public ulong GetUsedMemory()
+        public static IntPtr AllocateMemory(uint size)
+        {
+            uint pageCount = (size + PageSize - 1) / PageSize; // Calculate the number of pages needed
+
+            for (int i = 0; i < MemoryMap.Length; i++)
+            {
+                if (IsBlockFree(i, pageCount))
+                {
+                    MarkBlockAllocated(i, pageCount);
+                    return new IntPtr((uint)i * PageSize);
+                }
+            }
+
+            // Memory allocation failed
+            return IntPtr.Zero;
+        }
+
+        public static void FreeMemory(IntPtr address, uint size)
+        {
+            uint pageIndex = (uint)address.ToInt32() / PageSize;
+            uint pageCount = (size + PageSize - 1) / PageSize;
+
+            for (uint i = pageIndex; i < pageIndex + pageCount; i++)
+            {
+                MemoryMap[i] = false;
+            }
+        }
+
+        public static ulong GetUsedMemory()
         {
             ulong usedMemory = 0;
 
-            foreach (var block in allocatedMemoryBlocks)
+            for (int i = 0; i < MemoryMap.Length; i++)
             {
-                usedMemory += block.Size;
+                if (MemoryMap[i])
+                {
+                    usedMemory += PageSize;
+                }
             }
 
             return usedMemory;
         }
 
-        private class MemoryBlock
+        private static bool IsBlockFree(int startIndex, uint pageCount)
         {
-            public ulong Size { get; }
-
-            public MemoryBlock(ulong size)
+            for (int i = startIndex; i < startIndex + pageCount && i < MemoryMap.Length; i++)
             {
-                Size = size;
+                if (MemoryMap[i])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private static void MarkBlockAllocated(int startIndex, uint pageCount)
+        {
+            for (int i = startIndex; i < startIndex + pageCount && i < MemoryMap.Length; i++)
+            {
+                MemoryMap[i] = true;
             }
         }
     }

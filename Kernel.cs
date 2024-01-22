@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using System.Text;
 using Sys = Cosmos.System;
 using Cosmos.System.FileSystem;
-
+using ShanOS.CosmosMemoryManagement;
 
 namespace ShanOS
 {
     public class Kernel : Sys.Kernel
     {
         private CommandManager commandManager;
+        private MemoryManager memoryManager;
         private CosmosVFS vfs;
         protected override void BeforeRun()
         {
@@ -21,7 +22,9 @@ namespace ShanOS
            
             this.vfs = new CosmosVFS();
             Sys.FileSystem.VFS.VFSManager.RegisterVFS(this.vfs);
-            this.commandManager = new CommandManager();
+
+            this.memoryManager = new MemoryManager();
+            this.commandManager = new CommandManager(memoryManager);
 
         }
 
