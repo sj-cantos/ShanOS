@@ -6,10 +6,12 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Sys = Cosmos.System;
+using ShanOS.CosmosMemoryManagement;
 namespace ShanOS.Commands
 {
     internal class FileCommand : Command
     {
+        private MemoryManager memoryManager;
         public FileCommand(string name) : base(name) { }
 
         public override string execute(string[] args)
@@ -26,10 +28,13 @@ namespace ShanOS.Commands
                     try
                     {
 
+                        uint fileSize = 1024; // Set your desired file size
+                        IntPtr fileData = MemoryManager.AllocateMemory(fileSize);
                         string filePath = Path.Combine(root + currentDirectory, args[1]);
                         Sys.FileSystem.VFS.VFSManager.CreateFile(filePath);
                         response = $"Your file {args[1]} was created successfully at {filePath}.";
-                       
+                        MemoryManager.FreeMemory(fileData);
+
                     }
                     catch (Exception e)
                     {

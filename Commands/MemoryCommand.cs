@@ -7,14 +7,14 @@ using ShanOS.CosmosMemoryManagement;
 
     internal class MemoryCommand : Command
     {
-        private MemoryManager memoryManager;
+    private MemoryManager memoryManager;
 
-        public MemoryCommand(string name, MemoryManager memoryManager) : base(name)
-        {
-            this.memoryManager = memoryManager;
-        }
+    public MemoryCommand(string name, MemoryManager memoryManager) : base(name)
+    {
+        this.memoryManager = memoryManager;
+    }
 
-        public override string execute(string[] args)
+    public override string execute(string[] args)
         {
             string response = "";
 
@@ -28,17 +28,17 @@ using ShanOS.CosmosMemoryManagement;
                 switch (args[0])
                 {
                     case "info":
-                        response = GetMemoryInfo();
+                        response = GCImplementation.GetAvailableRAM().ToString();
                         break;
 
                     case "free":
-                        response = GetFreeMemory();
+                        response = MemoryManager.GetAvailableRAM().ToString();
                         break;
 
                 case "used":
                     try
                     {
-                        ulong usedMemory = ShanOS.CosmosMemoryManagement.MemoryManager.GetUsedMemory();
+                        ulong usedMemory = MemoryManager.GetUsedMemory();
                         response = $"Used Memory: {usedMemory} bytes";
                     }
                     catch (Exception ex)

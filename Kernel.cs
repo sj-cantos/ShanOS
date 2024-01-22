@@ -24,7 +24,9 @@ namespace ShanOS
             this.vfs = new CosmosVFS();
             Sys.FileSystem.VFS.VFSManager.RegisterVFS(this.vfs);
 
+            
             this.memoryManager = new MemoryManager();
+            MemoryManager.InitializeMemory();
             this.commandManager = new CommandManager(memoryManager);
             this.userManager = new UserManager(); // Assume you have a UserManager class
 
